@@ -6,13 +6,13 @@ import dbus
 
 parser = argparse.ArgumentParser(description='Send commands to the SonoMKR daemon.')
 
-subparsers = parser.add_subparsers(help='command interface')
+subparsers = parser.add_subparsers(help='interface commands', description='valid subcommands', help='additional help')
 
 parser_acquisition = subparsers.add_parser('acquisition')
 parser_acquisition.add_argument("action", choices=['start', 'stop'])
 
-parser_acquisition = subparsers.add_parser('configuration')
-parser_acquisition.add_argument("action", choices=['current', 'duplicate'])
+# parser_acquisition = subparsers.add_parser('configuration')
+# parser_acquisition.add_argument("action", choices=['current', 'duplicate'])
 
 args = parser.parse_args()
 
@@ -20,3 +20,8 @@ if (args.action == "start"):
 	bus = dbus.SystemBus()
 	controller = bus.get_object('fr.sonomkr', '/Controller')
 	controller.startAcquisition()
+
+if (args.action == "stop"):
+	bus = dbus.SystemBus()
+	controller = bus.get_object('fr.sonomkr', '/Controller')
+	controller.stopAcquisition()
